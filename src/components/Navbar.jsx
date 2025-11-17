@@ -1,8 +1,16 @@
 import { Menu, X } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   const navItems = [
     { name: 'História', href: '#story' },
@@ -12,7 +20,7 @@ export default function Navbar() {
   ]
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-black/30 bg-black/40 border-b border-white/10">
+    <header className={`fixed top-0 inset-x-0 z-50 border-b border-white/10 transition-colors ${scrolled ? 'backdrop-blur supports-[backdrop-filter]:bg-black/50 bg-black/50' : 'backdrop-blur-none bg-transparent'}`}>
       <nav className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 h-16">
         <a href="#" className="text-white font-semibold tracking-wide text-lg">Grupo Repolho</a>
 

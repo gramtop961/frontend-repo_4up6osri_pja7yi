@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion'
+
 export default function Story() {
   const timeline = [
     {
@@ -22,24 +24,42 @@ export default function Story() {
     },
   ]
 
+  const container = {
+    hidden: {},
+    show: {
+      transition: { staggerChildren: 0.12 }
+    }
+  }
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } }
+  }
+
   return (
-    <section id="story" className="relative bg-black text-white py-24">
+    <section id="story" className="relative bg-black text-white py-28 scroll-mt-24">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.08),transparent_60%)]" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl">
-          <h2 className="text-3xl sm:text-4xl font-semibold">Nossa história</h2>
-          <p className="mt-3 text-white/70">Do laboratório de ideias ao ecossistema de marcas. Uma jornada que evoluiu com o mercado e com as necessidades dos nossos clientes.</p>
+          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight">Nossa história</h2>
+          <p className="mt-3 text-base sm:text-lg leading-relaxed text-white/70">Do laboratório de ideias ao ecossistema de marcas. Uma jornada que evoluiu com o mercado e com as necessidades dos nossos clientes.</p>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
-          {timeline.map((item) => (
-            <div key={item.year} className="group rounded-2xl border border-white/10 p-6 bg-white/5 hover:bg-white/10 transition">
-              <div className="text-sm text-white/60">{item.year}</div>
-              <h3 className="mt-2 text-xl font-semibold">{item.title}</h3>
-              <p className="mt-2 text-white/70">{item.text}</p>
-            </div>
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8"
+        >
+          {timeline.map((itemData) => (
+            <motion.div key={itemData.year} variants={item} className="group rounded-2xl border border-white/10 p-6 bg-white/5 hover:bg-white/10 transition">
+              <div className="text-sm text-white/60">{itemData.year}</div>
+              <h3 className="mt-2 text-xl font-semibold tracking-tight">{itemData.title}</h3>
+              <p className="mt-2 text-white/70 leading-relaxed">{itemData.text}</p>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )
