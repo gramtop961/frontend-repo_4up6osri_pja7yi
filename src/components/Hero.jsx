@@ -1,13 +1,29 @@
 import Spline from '@splinetool/react-spline'
 import { motion } from 'framer-motion'
+import { useState } from 'react'
 
 export default function Hero() {
+  const [loaded, setLoaded] = useState(false)
+  const [failed, setFailed] = useState(false)
+
   return (
     <section className="relative min-h-[90vh] w-full bg-black text-white overflow-hidden">
-      <div className="absolute inset-0">
-        <Spline scene="https://prod.spline.design/a6HhFsV3-DN9Z-yP/scene.splinecode" style={{ width: '100%', height: '100%' }} />
-      </div>
+      {/* Background fallback gradient/pattern so it never looks empty */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.06),transparent_55%)]" />
 
+      {/* Spline (3D) - hidden until loaded, gracefully fails */}
+      {!failed && (
+        <div className={`absolute inset-0 transition-opacity duration-700 ${loaded ? 'opacity-100' : 'opacity-0'}`}>
+          <Spline
+            scene="https://prod.spline.design/a6HhFsV3-DN9Z-yP/scene.splinecode"
+            style={{ width: '100%', height: '100%' }}
+            onLoad={() => setLoaded(true)}
+            onError={() => setFailed(true)}
+          />
+        </div>
+      )}
+
+      {/* Content overlay */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-40 pb-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -27,6 +43,14 @@ export default function Hero() {
             <a href="#companies" className="inline-flex items-center rounded-full border border-white/20 text-white px-5 py-3 text-sm font-semibold hover:bg-white/10 transition">Nossas empresas</a>
           </div>
         </motion.div>
+
+        {/* Loading hint if Spline is still fetching */}
+        {!loaded && !failed && (
+          <div className="mt-6 text-white/60 text-sm">Carregando cena 3D…</div>
+        )}
+        {failed && (
+          <div className="mt-6 text-white/60 text-sm">Não foi possível carregar o 3D agora. O conteúdo segue disponível normalmente.</div>
+        )}
       </div>
 
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-black to-transparent" />
