@@ -7,25 +7,29 @@ export default function Companies() {
       icon: Rocket,
       name: 'Repolho Studio',
       desc: 'Criação e produção de experiências digitais, sites e produtos interativos que encantam e performam.',
-      tags: ['UX/UI', 'Web', 'Interativo']
+      tags: ['UX/UI', 'Web', 'Interativo'],
+      image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop'
     },
     {
       icon: LineChart,
       name: 'Repolho Data',
       desc: 'Estratégia orientada a dados para decisões mais inteligentes, previsões e otimização contínua.',
-      tags: ['Analytics', 'BI', 'Crescimento']
+      tags: ['Analytics', 'BI', 'Crescimento'],
+      image: 'https://images.unsplash.com/photo-1551281044-8af39b1b8ae6?q=80&w=1200&auto=format&fit=crop'
     },
     {
       icon: Building2,
       name: 'Repolho Lab',
       desc: 'Pesquisa, prototipagem e inovação aplicada com foco em novas tecnologias e validação rápida.',
-      tags: ['P&D', 'Prototipagem', 'IA']
+      tags: ['P&D', 'Prototipagem', 'IA'],
+      image: 'https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop'
     },
     {
       icon: Sparkles,
       name: 'Repolho Brand',
       desc: 'Posicionamento de marca, identidade visual e conteúdo que aproximam pessoas e negócios.',
-      tags: ['Branding', 'Conteúdo', 'Campanhas']
+      tags: ['Branding', 'Conteúdo', 'Campanhas'],
+      image: 'https://images.unsplash.com/photo-1517256064527-09c73fc73e38?q=80&w=1200&auto=format&fit=crop'
     },
   ]
 
@@ -61,18 +65,32 @@ export default function Companies() {
               key={c.name}
               variants={item}
               whileHover={{ y: -4 }}
-              className="group relative rounded-2xl border border-white/10 bg-white/5 p-6 transition-colors hover:bg-white/10"
+              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-0 transition-colors hover:bg-white/10"
             >
-              <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-br from-white/5 to-transparent" />
-              <div className="flex items-center gap-3">
-                <c.icon className="w-6 h-6 text-white/90" />
-                <h3 className="text-lg font-semibold tracking-tight">{c.name}</h3>
+              <div className="relative h-40 overflow-hidden">
+                <motion.img
+                  src={c.image}
+                  alt={c.name}
+                  className="w-full h-full object-cover"
+                  initial={{ scale: 1.06, filter: 'grayscale(40%)' }}
+                  whileInView={{ scale: 1.02, filter: 'grayscale(0%)' }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, ease: 'easeOut' }}
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
               </div>
-              <p className="mt-3 text-sm sm:text-base leading-relaxed text-white/70">{c.desc}</p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {c.tags.map((t) => (
-                  <span key={t} className="text-xs px-2 py-1 rounded-full bg-white/10 border border-white/10">{t}</span>
-                ))}
+              <div className="p-6">
+                <div className="flex items-center gap-3">
+                  <c.icon className="w-6 h-6 text-white/90" />
+                  <h3 className="text-lg font-semibold tracking-tight">{c.name}</h3>
+                </div>
+                <p className="mt-3 text-sm sm:text-base leading-relaxed text-white/70">{c.desc}</p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {c.tags.map((t) => (
+                    <span key={t} className="text-xs px-2 py-1 rounded-full bg-white/10 border border-white/10">{t}</span>
+                  ))}
+                </div>
               </div>
             </motion.div>
           ))}

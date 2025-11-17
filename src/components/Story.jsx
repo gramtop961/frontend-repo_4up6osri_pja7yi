@@ -6,21 +6,25 @@ export default function Story() {
       year: '2012',
       title: 'O início',
       text: 'Nasce o primeiro projeto que daria origem ao Grupo Repolho: uma iniciativa que unia criatividade e tecnologia para resolver problemas reais.',
+      image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop'
     },
     {
       year: '2016',
       title: 'Expansão',
       text: 'Com novos talentos e clientes, ampliamos nossa atuação e começamos a estruturar áreas especializadas.',
+      image: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1200&auto=format&fit=crop'
     },
     {
       year: '2019',
       title: 'O Grupo',
       text: 'Quatro empresas complementares se consolidam sob a mesma visão: criar impacto através de experiências, dados e tecnologia.',
+      image: 'https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1200&auto=format&fit=crop'
     },
     {
       year: '2024',
       title: 'Agora',
       text: 'Seguimos inovando com projetos que combinam estratégia, design e desenvolvimento de ponta, sempre focados em resultado.',
+      image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1200&auto=format&fit=crop'
     },
   ]
 
@@ -52,11 +56,26 @@ export default function Story() {
           viewport={{ once: true, amount: 0.2 }}
           className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8"
         >
-          {timeline.map((itemData) => (
-            <motion.div key={itemData.year} variants={item} className="group rounded-2xl border border-white/10 p-6 bg-white/5 hover:bg-white/10 transition">
-              <div className="text-sm text-white/60">{itemData.year}</div>
-              <h3 className="mt-2 text-xl font-semibold tracking-tight">{itemData.title}</h3>
-              <p className="mt-2 text-white/70 leading-relaxed">{itemData.text}</p>
+          {timeline.map((itemData, idx) => (
+            <motion.div key={itemData.year} variants={item} className="group overflow-hidden rounded-2xl border border-white/10 p-0 bg-white/5 hover:bg-white/10 transition">
+              <div className="relative aspect-[16/9] overflow-hidden">
+                <motion.img
+                  src={itemData.image}
+                  alt={itemData.title}
+                  className="w-full h-full object-cover"
+                  initial={{ scale: 1.06, filter: 'grayscale(40%)' }}
+                  whileInView={{ scale: 1.02, filter: 'grayscale(0%)' }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, ease: 'easeOut' }}
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <div className="absolute top-3 left-3 text-xs px-2 py-1 rounded-full bg-black/60 border border-white/10">{itemData.year}</div>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-semibold tracking-tight">{itemData.title}</h3>
+                <p className="mt-2 text-white/70 leading-relaxed">{itemData.text}</p>
+              </div>
             </motion.div>
           ))}
         </motion.div>
