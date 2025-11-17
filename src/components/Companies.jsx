@@ -1,4 +1,4 @@
-import { Building2, Rocket, Sparkles, ChartLine } from 'lucide-react'
+import { Building2, Rocket, Sparkles, LineChart } from 'lucide-react'
 import { motion } from 'framer-motion'
 
 export default function Companies() {
@@ -10,7 +10,7 @@ export default function Companies() {
       tags: ['UX/UI', 'Web', 'Interativo']
     },
     {
-      icon: ChartLine,
+      icon: LineChart,
       name: 'Repolho Data',
       desc: 'Estratégia orientada a dados para decisões mais inteligentes, previsões e otimização contínua.',
       tags: ['Analytics', 'BI', 'Crescimento']
